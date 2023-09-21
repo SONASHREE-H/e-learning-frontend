@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import NavBar from './components/NavBar'
+
+
+const App = () => {
+    const [userLoggedIn, setUserloggedIn] = useState(false) 
+
+    const toggleUserLoggedInCb = () => {
+        setUserloggedIn(!userLoggedIn)
+    }
+
+    useEffect(() => {
+        if(localStorage.getItem('token')) // => token is present in ls i.e, user is logged-in
+        {
+            toggleUserLoggedInCb() // setting userLoggedIn = true
+        }
+    }, [])
+
+    return (
+      <div>
+          <h1> e-learning platform </h1>
+          <NavBar userLoggedIn={userLoggedIn} toggleUserLoggedInCb={toggleUserLoggedInCb} />
+      </div>
+    )
 }
 
-export default App;
+export default App
